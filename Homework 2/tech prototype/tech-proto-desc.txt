@@ -1,0 +1,1 @@
+Added contact, restaurants, reservations and home pages and interconnected them, as well as log in and register pages. In the restaurants page each restaurant has CRUD operations which redirect to different pages, from which you can go back to the restaurants page. Also, there is a connection to a database, as well as an account database.
