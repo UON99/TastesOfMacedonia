@@ -1,2 +1,0 @@
-osmfilter map --keep="amenity=restaurant" --drop="access=no" --ignore-dependencies | osmconvert.exe - --all-to-nodes --csv="@id @lon @lat name address cuisine opening_hours website phone" --csv-headline --csv-separator="," -o="test2.csv"
-osmfilter map --keep="amenity=restaurant" --drop="access=no" --ignore-dependencies  -o=restaurants.osm
