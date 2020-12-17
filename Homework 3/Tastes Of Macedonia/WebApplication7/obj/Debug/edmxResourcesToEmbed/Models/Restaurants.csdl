@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="masterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="mytable">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" />
+    <Property Name="lon" Type="Decimal" Precision="18" Scale="15" Nullable="false" />
+    <Property Name="lat" Type="Decimal" Precision="18" Scale="15" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="cuisine" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="opening_hours" Type="String" MaxLength="33" FixedLength="false" Unicode="true" />
+    <Property Name="website" Type="String" MaxLength="33" FixedLength="false" Unicode="true" />
+    <Property Name="phone" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="masterEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="mytables" EntityType="Self.mytable" />
+  </EntityContainer>
+</Schema>

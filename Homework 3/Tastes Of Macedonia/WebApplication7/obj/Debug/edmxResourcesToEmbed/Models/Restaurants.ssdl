@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="masterModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="masterModelStoreContainer">
+    <EntitySet Name="mytables" EntityType="masterModel.Store.mytables" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="mytables">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" Nullable="false" />
+    <Property Name="lon" Type="decimal" Nullable="false" Precision="18" Scale="15" />
+    <Property Name="lat" Type="decimal" Nullable="false" Precision="18" Scale="15" />
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="16" />
+    <Property Name="cuisine" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="opening_hours" Type="nvarchar" Nullable="true" MaxLength="33" />
+    <Property Name="website" Type="nvarchar" Nullable="true" MaxLength="33" />
+    <Property Name="phone" Type="nvarchar" Nullable="true" MaxLength="16" />
+  </EntityType>
+</Schema>
