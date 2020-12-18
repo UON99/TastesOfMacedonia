@@ -3,67 +3,142 @@
 @{
     ViewBag.Title = "Index";
 }
+<link rel="stylesheet" href="/Content/ol.css" type="text/css">
+<link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css">
+<script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+
+<style>
+    .map {
+        height: 400px;
+        width: 100%;
+    }
+</style>
 
 <h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.lon)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.lat)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cuisine)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.opening_hours)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.website)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.phone)
-        </th>
-        <th></th>
-    </tr>
+<div class="row">
+    <div id="map" class="map"></div>
+    
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.lon)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.lat)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cuisine)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.opening_hours)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.website)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.phone)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
+</div>
+<div class="row">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.lon)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.lat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cuisine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.opening_hours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.website)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.phone)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.lon)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.lat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cuisine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.opening_hours)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.website)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.phone)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>
+
+
+
+
+@section scripts{
+    <script src="~/Scripts/ol.js"></script>
+    <script type="text/javascript">
+
+        var attribution = new ol.control.Attribution({
+            collapsible: false
+        });
+
+        var map = new ol.Map({
+            controls: ol.control.defaults({ attribution: false }).extend([attribution]),
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            target: 'map',
+            view: new ol.View({
+                center: ol.proj.fromLonLat([21.4417, 42.0052]),
+                maxZoom: 18,
+                zoom: 12
+            })
+        });
+
+
+        function add_map_point(lat, lng) {
+            var vectorLayer = new ol.layer.Vector({
+                source: new ol.source.Vector({
+                    features: [new ol.Feature({
+                        geometry: new ol.geom.Point(ol.proj.transform([parseFloat(lng), parseFloat(lat)], 'EPSG:4326', 'EPSG:3857')),
+                    })]
+                }),
+                style: new ol.style.Style({
+                    image: new ol.style.Icon({
+                        anchor: [0.5, 0.5],
+                        anchorXUnits: "fraction",
+                        anchorYUnits: "fraction",
+                        src: "https://upload.wikimedia.org/wikipedia/commons/e/ec/RedDot.svg"
+                    })
+                })
+            });
+
+            map.addLayer(vectorLayer);
+        }
+        @foreach (var item in Model) { 
+            <text>add_map_point(@item.lat, @item.lon)</text>
+        }
+
+
+
+    </script>
+
 }
-
-</table>
