@@ -12,6 +12,38 @@
         height: 400px;
         width: 100%;
     }
+
+    body {
+        font-family: Helvetica;
+    }
+
+
+    .popup {
+        margin-bottom: 10px;
+        background-color: #e15915;
+        height: 200px !important;
+        z-index: 100000;
+        border-radius: 30px;
+        width: 400px !important;
+    }
+
+    .arrow {
+        position: absolute;
+        font-size: 50px;
+        margin-left: auto;
+        margin-right: auto;
+        top: 180px;      
+        text-align: center;
+        width: 100%;
+        color: #e15915
+    }
+
+    #namediv {
+
+        font-size: 20px;
+        
+        text-align: center;
+    }
 </style>
 
 <h2>Index</h2>
@@ -21,8 +53,14 @@
 </p>
 <div class="row">
     <div id="map" class="map"></div>
-    <div id="popup" class="popup" style="background:white; width:300px;height:150px"></div>
 
+    <div class="popup" id="popup">
+        <div class="namediv" id="namediv">
+
+        </div>
+
+        <div class="glyphicon glyphicon-triangle-bottom arrow"></div>
+    </div>
 </div>
 <div class="row">
     <table class="table">
@@ -168,17 +206,18 @@
                 var props = feature.getProperties();
                 var info = feature;
 
+                var namediv = document.getElementById('namediv');
 
                 // Offset the popup so it points at the middle of the marker not the tip
                 popup.setOffset([0, -22]);
                 popup.setPosition(evt.coordinate);
                 element.style.display = 'block';
                 element.style.fontSize = '10px';
-                element.innerHTML = feature.get('name');
-                element.innerHTML += feature.get('phone');
-                element.innerHTML += feature.get('website');
-                element.innerHTML += feature.get('opening');
-                
+
+                namediv.innerHTML = feature.get('name');
+
+
+
 
             } else {
                 element.style.display = 'none';
