@@ -1,0 +1,27 @@
+﻿@model WebApplication7.Models.Item
+@{
+    ViewBag.Title = "Reservations";
+}
+
+<h2>Reservations</h2>
+<div class="container">
+    <div class="row">
+        <ul>
+            @if (Session["reservation"] == null)
+            {
+                <li>You have no current reservations</li>
+            }
+            @if (Session["reservation"] != null)
+            {
+                foreach (var Item in (List<WebApplication7.Models.Item>)Session["reservation"])
+                {
+                    <li>@Item.restaurant at @Item.time</li>
+
+                }
+            }
+
+        </ul>
+    </div>
+</div>
+
+

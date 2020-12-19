@@ -29,5 +29,7 @@ namespace WebApplication7.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<WebApplication7.Models.mytable> mytables { get; set; }
     }
 }

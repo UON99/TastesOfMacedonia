@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls.Expressions;
 using WebApplication7.Models;
 
 namespace WebApplication7.Controllers
@@ -17,17 +18,135 @@ namespace WebApplication7.Controllers
         private masterEntities db = new masterEntities();
 
 
+        
         // GET: mytables
         public ActionResult Index()
         {
                 return View(db.mytables.ToList());
             
         }
-        
+
+        public ActionResult Reservations() {
+            return View("AddToReservations");
+        }
+       
+        public ActionResult MakeReservation(long id)
+        {
+            mytable mytable = db.mytables.Find(id);
+            Item item = new Item();
+            item.restaurant = mytable.name;
+            return View(item);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MakeReservation([Bind(Include = "restaurant,time")] Item item)
+        {
+            if (Session["reservation"] != null)
+            {
+                var reservations = (List<Item>)Session["reservation"];
+                //mytable mytable = db.mytables.Find(id);
+                
+                int flag = 0;
+                for (int i = 0; i < reservations.Count; i++)
+                {
+                    if (item.restaurant == reservations[i].restaurant)
+                    {
+                        flag = 1;
+                    }
+                    else {
+                        flag = 0;
+                    }
+                }
+                if (flag != 1)
+                {
+                    reservations.Add(new Item()
+                    {
+                        restaurant = item.restaurant,
+                        time = item.time
+
+                    });
+                }
+
+                Session["reservation"] = reservations;
+                return View("AddToReservations");
+            }
+            else
+            {
+                var reservations = new List<Item>();
+                //mytable mytable = db.mytables.Find(id);
+             
+
+                reservations.Add(new Item()
+                {
+                    restaurant = item.restaurant,
+                    time = item.time
+
+                });
+                Session["reservation"] = reservations;
+                return View("AddToReservations");
+            }
+        }
+        public ActionResult AddToReservations(long id)
+        {
+            if (Session["reservation"] != null)
+            {
+                var reservations = (List<Item>)Session["reservation"];
+                mytable mytable = db.mytables.Find(id);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                if (mytable == null)
+                {
+                    return HttpNotFound();
+                }
+                int flag = 0;
+                for (int i = 0; i < reservations.Count; i++) {
+                    if (mytable.name == reservations[i].restaurant) {
+                        flag = 1;
+                    }
+                }
+                if (flag != 1) {
+                    reservations.Add(new Item()
+                    {
+                        restaurant = mytable.name,
+                        time = DateTime.UtcNow
+
+                    });
+                }
+                
+                Session["reservation"] = reservations;
+                return View();
+            }
+            else {
+                var reservations = new List<Item>();
+                mytable mytable = db.mytables.Find(id);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                if (mytable == null)
+                {
+                    return HttpNotFound();
+                }
+
+                reservations.Add(new Item()
+                {
+                    restaurant = mytable.name,
+                    time = DateTime.UtcNow
+
+                });
+                Session["reservation"] = reservations;
+                return View();
+            }
             
-    
+            
+            
+        }
         // GET: mytables/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(long? id)
         {
             if (id == null)
             {
@@ -65,7 +184,7 @@ namespace WebApplication7.Controllers
         }
 
         // GET: mytables/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(long? id)
         {
             if (id == null)
             {
@@ -96,7 +215,7 @@ namespace WebApplication7.Controllers
         }
 
         // GET: mytables/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(long? id)
         {
             if (id == null)
             {
@@ -113,7 +232,7 @@ namespace WebApplication7.Controllers
         // POST: mytables/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(long id)
         {
             mytable mytable = db.mytables.Find(id);
             db.mytables.Remove(mytable);
