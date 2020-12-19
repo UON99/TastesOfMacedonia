@@ -11,5 +11,6 @@ namespace WebApplication7.Models
         [Key]
         public String restaurant { get; set; }
         public DateTime time { get; set; }
+        
     }
 }

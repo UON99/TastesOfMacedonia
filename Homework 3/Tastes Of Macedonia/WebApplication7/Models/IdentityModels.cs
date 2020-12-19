@@ -18,6 +18,7 @@ namespace WebApplication7.Models
         }
     }
 
+    
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()

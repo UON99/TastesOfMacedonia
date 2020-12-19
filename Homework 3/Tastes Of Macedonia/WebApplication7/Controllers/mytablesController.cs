@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
-using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls.Expressions;
 using WebApplication7.Models;
 
 namespace WebApplication7.Controllers
@@ -16,14 +11,13 @@ namespace WebApplication7.Controllers
     public class mytablesController : Controller
     {
         private masterEntities db = new masterEntities();
-
-
+        private ApplicationDbContext accdb = new ApplicationDbContext();
         
         // GET: mytables
         public ActionResult Index()
         {
-                return View(db.mytables.ToList());
-            
+            return View(db.mytables.ToList());
+           
         }
 
         public ActionResult Reservations() {
@@ -32,10 +26,25 @@ namespace WebApplication7.Controllers
        
         public ActionResult MakeReservation(long id)
         {
+            /*
+            FrontPageViewData viewData = new FrontPageViewData();
+            viewData.Mytable = db.mytables.Find(id);
+            viewData.db = db;  /// celata baza so site restaurants reservations i favorites
+            var currentuser = System.Web.HttpContext.Current.User.Identity.Name;  /// ova go dobiva logiraniot user mozes i toa da go stavis vo viewdata.
+           
+            return View(viewData);
+            */
+
+            if (id != null)
+            {
             mytable mytable = db.mytables.Find(id);
             Item item = new Item();
+           
             item.restaurant = mytable.name;
             return View(item);
+
+            }
+            return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -63,7 +72,7 @@ namespace WebApplication7.Controllers
                     {
                         restaurant = item.restaurant,
                         time = item.time
-
+                        
                     });
                 }
 
@@ -92,11 +101,7 @@ namespace WebApplication7.Controllers
             {
                 var reservations = (List<Item>)Session["reservation"];
                 mytable mytable = db.mytables.Find(id);
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-
+                
                 if (mytable == null)
                 {
                     return HttpNotFound();
@@ -122,10 +127,7 @@ namespace WebApplication7.Controllers
             else {
                 var reservations = new List<Item>();
                 mytable mytable = db.mytables.Find(id);
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
+                
 
                 if (mytable == null)
                 {

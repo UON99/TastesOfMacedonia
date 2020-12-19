@@ -26,5 +26,8 @@ namespace WebApplication7.Models
         }
     
         public virtual DbSet<mytable> mytables { get; set; }
+        public virtual DbSet<favorite> favorites { get; set; }
+        public virtual DbSet<reservation> reservations { get; set; }
+        public virtual DbSet<mytable1> mytable1 { get; set; }
     }
 }

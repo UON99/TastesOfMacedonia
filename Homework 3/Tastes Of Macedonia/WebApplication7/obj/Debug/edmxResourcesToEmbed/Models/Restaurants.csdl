@@ -15,5 +15,43 @@
   </EntityType>
   <EntityContainer Name="masterEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="mytables" EntityType="Self.mytable" />
+    <EntitySet Name="favorites" EntityType="masterModel.favorite" />
+    <EntitySet Name="reservations" EntityType="masterModel.reservation" />
+    <EntitySet Name="mytable1" EntityType="masterModel.mytable1" />
   </EntityContainer>
+  <EntityType Name="favorite">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="user" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="restaurant_name" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="reservation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="user" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="datetime" Type="DateTime" Precision="3" />
+    <Property Name="time" Type="Time" Precision="7" />
+    <Property Name="restaurant_name" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="mytable1">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="lon" />
+      <PropertyRef Name="lat" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="cuisine" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" />
+    <Property Name="lon" Type="Decimal" Nullable="false" Precision="18" Scale="15" />
+    <Property Name="lat" Type="Decimal" Nullable="false" Precision="18" Scale="15" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
+    <Property Name="cuisine" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="opening_hours" Type="String" MaxLength="33" FixedLength="false" Unicode="true" />
+    <Property Name="website" Type="String" MaxLength="33" FixedLength="false" Unicode="true" />
+    <Property Name="phone" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

@@ -170,17 +170,36 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Models\FrontPageViewData.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\mytablesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012171648268_InitialCreate.cs" />
+    <Compile Include="Migrations\202012171648268_InitialCreate.Designer.cs">
+      <DependentUpon>202012171648268_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012191518170_1.cs" />
+    <Compile Include="Migrations\202012191518170_1.Designer.cs">
+      <DependentUpon>202012191518170_1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\favorite.cs">
+      <DependentUpon>Restaurants.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\mytable.cs">
+      <DependentUpon>Restaurants.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\mytable1.cs">
+      <DependentUpon>Restaurants.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\reservation.cs">
       <DependentUpon>Restaurants.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Restaurants.Context.cs">
@@ -350,6 +369,14 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202012171648268_InitialCreate.resx">
+      <DependentUpon>202012171648268_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012191518170_1.resx">
+      <DependentUpon>202012191518170_1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

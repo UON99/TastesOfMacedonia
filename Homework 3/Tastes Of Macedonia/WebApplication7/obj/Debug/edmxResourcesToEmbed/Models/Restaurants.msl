@@ -15,5 +15,39 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="favorites">
+      <EntityTypeMapping TypeName="masterModel.favorite">
+        <MappingFragment StoreEntitySet="favorites">
+          <ScalarProperty Name="restaurant_name" ColumnName="restaurant_name" />
+          <ScalarProperty Name="user" ColumnName="user" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="reservations">
+      <EntityTypeMapping TypeName="masterModel.reservation">
+        <MappingFragment StoreEntitySet="reservations">
+          <ScalarProperty Name="restaurant_name" ColumnName="restaurant_name" />
+          <ScalarProperty Name="time" ColumnName="time" />
+          <ScalarProperty Name="datetime" ColumnName="datetime" />
+          <ScalarProperty Name="user" ColumnName="user" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="mytable1">
+      <EntityTypeMapping TypeName="masterModel.mytable1">
+        <MappingFragment StoreEntitySet="mytable">
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="website" ColumnName="website" />
+          <ScalarProperty Name="opening_hours" ColumnName="opening_hours" />
+          <ScalarProperty Name="cuisine" ColumnName="cuisine" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="lat" ColumnName="lat" />
+          <ScalarProperty Name="lon" ColumnName="lon" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
