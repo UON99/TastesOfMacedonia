@@ -10,10 +10,25 @@
 
 <style>
     .map {
-        height: 400px;
+        height: 600px;
         width: 100%;
     }
-
+    #info{
+        font-size:13px;
+        width:100%;
+    }
+        #info > *{
+            display: inline-block;
+            margin-top: auto;
+            margin-bottom: auto;
+            line-height: 20px;
+            height: 35px;
+            vertical-align: middle;
+            width: 40%;
+            white-space:nowrap;
+            margin-left:10px;
+            z-index:40;
+        }
     body {
         font-family: Helvetica;
     }
@@ -22,8 +37,8 @@
     .popup {
         margin-bottom: 10px;
         background-color: #e15915;
-        height: 200px !important;
-        z-index: 100000;
+        height: 170px !important;
+        z-index: 0;
         border-radius: 30px;
         width: 400px !important;
     }
@@ -33,7 +48,8 @@
         font-size: 50px;
         margin-left: auto;
         margin-right: auto;
-        top: 180px;
+        top: 155px;
+        z-index:0;
         text-align: center;
         width: 100%;
         color: #e15915
@@ -42,6 +58,7 @@
     #namediv {
         font-size: 20px;
         text-align: center;
+        margin-bottom:4px;
     }
 </style>
 
@@ -50,6 +67,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
 <div class="row">
     <div id="map" class="map"></div>
 
@@ -57,8 +75,20 @@
         <div class="namediv" id="namediv">
 
         </div>
+        <div id="info">
+            <b>Type of cuisine:</b>
+            <div class="cuisine" id="cuisine"></div>
+            <b>Opening Hours:</b>
+            <div class="opening_hours" id="opening_hours"></div>
+            <b>Website: </b>
+            <div class="website" id="website"></div>
+            <b>Phone: </b>
+            <div class="phone" id="phone"></div>
 
+        </div>
         <div class="glyphicon glyphicon-triangle-bottom arrow"></div>
+
+
     </div>
 </div>
 <div class="row">
@@ -87,6 +117,11 @@
         <tbody>
             @foreach (var item in Model.mytables)
             {
+                
+
+                    var @sum = 0;
+                    int @n = 0;
+                
                 <tr>
 
                     <td>
@@ -106,10 +141,66 @@
                     </td>
                     <td>
                         <!--@Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.id })-->
+    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+    @Html.ActionLink("Delete", "Delete", new { id = item.id })-->
+
                         @Html.ActionLink("Reserve", "MakeReservation", new { id = item.id })
                         |
+                        @{
+                            int t = 0;
+                            foreach (var r in Model.ratings)
+                            {
+                                if (r.RestaurantId == item.id)
+                                {
+                                    {
+                                        sum += (int)r.rating1;
+                                        n++;
+                                        t = 1;
+                                    }
+
+
+
+
+
+                                }
+                            }
+
+                            if (t == 1)
+                            {
+                                float average = (float)sum / (float)n;
+
+                                <b>Rating: <span>@average/5</span></b>
+                            }
+                            else
+                            {
+                                <b>Rating: <span>0/5</span></b>
+                            }
+
+                        }
+                        -
+                        @{
+                            int s = 0;
+                            foreach (var it in Model.ratings)
+                            {
+
+                                if (it.RestaurantId == item.id && ViewBag.UserID == it.user)
+                                {
+                                    <b>Rated </b>
+                                    <br />
+                                    s = 1;
+                                    break;
+
+                                }
+
+                            }
+
+                            if (s == 0)
+                            {
+                                @Html.ActionLink("Rate", "AddRating", new { id = item.id })
+                                <br />
+                            }
+                        }
+
 
                         @{
                             int g = 0;
@@ -149,14 +240,7 @@
     <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
 
-        var list = [];
-
-        var marker = {
-            lat: 0,
-            lon: 0,
-            name: "",
-            phone: "",
-        };
+      
         var attribution = new ol.control.Attribution({
             collapsible: false
         });
@@ -177,16 +261,13 @@
             })
         });
 
-        function add_map_point(lat, lng, name, phone, website, opening) {
-            marker.lat = lat;
-            marker.lon = lng;
-            marker.phone = phone;
-            marker.name = name;
-            list.push(marker);
+        function add_map_point(lat, lng, name,cuisine, phone, website, opening) {
+         
             var vectorLayer = new ol.layer.Vector({
                 source: new ol.source.Vector({
                     features: [new ol.Feature({
                         name: name,
+                        cuisine: cuisine,
                         phone: phone,
                         website: website,
                         opening: opening,
@@ -206,7 +287,7 @@
         }
 
         @foreach (var item in Model.mytables) {
-            <text>add_map_point('@item.lat', '@item.lon','@item.name','@item.phone','@item.website','@item.opening_hours')</text>
+            <text>add_map_point('@item.lat', '@item.lon','@item.name','@item.cuisine','@item.phone','@item.website','@item.opening_hours')</text>
         }
         var element = document.getElementById('popup');
         var popup = new ol.Overlay({
@@ -220,12 +301,12 @@
                 return feature;
             });
             if (feature) {
-                var coord = feature.getGeometry().getCoordinates();
-                var props = feature.getProperties();
-                var info = feature;
 
                 var namediv = document.getElementById('namediv');
-
+                var cuisine = document.getElementById('cuisine');
+                var phone = document.getElementById('phone');
+                var website = document.getElementById('website');
+                var opening = document.getElementById('opening_hours');
                 // Offset the popup so it points at the middle of the marker not the tip
                 popup.setOffset([0, -22]);
                 popup.setPosition(evt.coordinate);
@@ -233,9 +314,10 @@
                 element.style.fontSize = '10px';
 
                 namediv.innerHTML = feature.get('name');
-
-
-
+                cuisine.innerHTML = feature.get('cuisine');
+                phone.innerHTML = feature.get('phone');
+                website.innerHTML = feature.get('website');
+                opening.innerHTML = feature.get('opening');
 
             } else {
                 element.style.display = 'none';

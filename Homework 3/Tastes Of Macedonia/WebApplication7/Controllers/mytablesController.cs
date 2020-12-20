@@ -20,11 +20,11 @@ namespace WebApplication7.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            
-            
+
             JointIndex ji = new JointIndex();
             ji.favorites = db.favorites.ToList();
             ji.mytables = db.mytables.ToList();
+            ji.ratings = db.Ratings.ToList();
             ViewBag.userID= User.Identity.GetUserId();
             
             return View(ji);
@@ -71,18 +71,41 @@ namespace WebApplication7.Controllers
             
             //return View();
         }
+        public ActionResult AddRating(long? id)
+        {
+            
+            if (id != null)
+            {
+            mytable mytable = db.mytables.Find(id);
+            Rating rating = new Rating();
+                ViewBag.restaurant_name = mytable.name;
+                rating.RestaurantId = mytable.id;
+                rating.user = User.Identity.GetUserId();
+
+                return View(rating);
+
+            }
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddRating([Bind(Include = "id,RestaurantId,rating1,user")] Rating rating)
+        {
+            var rate = new Rating();
+            
+            var user = User.Identity.GetUserId();
+
+                rate.rating1 = rating.rating1;
+                rate.RestaurantId = rating.RestaurantId;
+                rate.user = User.Identity.GetUserId();
+                db.Ratings.Add(rate);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+        }
 
         public ActionResult MakeReservation(long id)
         {
-            /*
-            FrontPageViewData viewData = new FrontPageViewData();
-            viewData.Mytable = db.mytables.Find(id);
-            viewData.db = db;  /// celata baza so site restaurants reservations i favorites
-            var currentuser = System.Web.HttpContext.Current.User.Identity.Name;  /// ova go dobiva logiraniot user mozes i toa da go stavis vo viewdata.
-           
-            return View(viewData);
-            */
-
+            
             if (id != null)
             {
             mytable mytable = db.mytables.Find(id);
@@ -100,14 +123,15 @@ namespace WebApplication7.Controllers
         public ActionResult MakeReservation([Bind(Include = "Id,user,,restaurant_name,datetime")] reservation reservation)
         {
             var reserve = new reservation();
+            
             var userID = User.Identity.GetUserId();
                 reserve.restaurant_name = reservation.restaurant_name;
                 reserve.datetime = reservation.datetime;
                 reserve.Id = reservation.Id;
                 reserve.user = userID;     
-                db.reservations.Add(reserve);      
+                db.reservations.Add(reserve);
                 db.SaveChanges();
-                return RedirectToAction("AddToReservations");        
+                return RedirectToAction("AddToReservations");
         }
         [Authorize]
         public ActionResult AddToReservations()
@@ -116,7 +140,7 @@ namespace WebApplication7.Controllers
 
             ViewBag.userid = userID;
 
-                return View(db.reservations.ToList());
+            return View(db.reservations.ToList());
 
                
         }

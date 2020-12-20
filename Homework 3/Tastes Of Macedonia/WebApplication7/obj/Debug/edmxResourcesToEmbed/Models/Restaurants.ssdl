@@ -4,7 +4,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="user" Type="nvarchar" MaxLength="256" />
     <Property Name="restaurant_name" Type="nvarchar" MaxLength="16" />
   </EntityType>
@@ -42,11 +42,20 @@ warning 6002: The table/view '|DataDirectory|\Restaurant-Finder-DB.mdf.dbo.mytab
     <Property Name="website" Type="nvarchar" MaxLength="33" />
     <Property Name="phone" Type="nvarchar" MaxLength="16" />
   </EntityType>
+  <EntityType Name="Ratings">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RestaurantId" Type="bigint" Nullable="false" />
+    <Property Name="rating" Type="int" />
+    <Property Name="user" Type="nvarchar" MaxLength="256" />
+  </EntityType>
   <EntityType Name="reservations">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="user" Type="nvarchar" MaxLength="256" />
     <Property Name="datetime" Type="datetime" />
     <Property Name="time" Type="time" Precision="7" />
@@ -54,6 +63,7 @@ warning 6002: The table/view '|DataDirectory|\Restaurant-Finder-DB.mdf.dbo.mytab
   </EntityType>
   <EntityContainer Name="masterModelStoreContainer">
     <EntitySet Name="favorites" EntityType="Self.favorites" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ratings" EntityType="Self.Ratings" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="reservations" EntityType="Self.reservations" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="mytable" EntityType="Self.mytable" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 

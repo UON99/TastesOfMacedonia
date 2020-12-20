@@ -17,11 +17,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Tastes of Macedonia", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a href="@Url.Action("Index", "Home")">
+                    <img src="~/Content/logo.png" alt="Tastes of Macedonia" width="100px" style="margin:0;padding:0; vertical-align:middle; margin-right:20px;" />
+                </a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Restaurants", "Index", "mytables")</li>
                     <li>@Html.ActionLink("Reservations", "AddToReservations", "mytables")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>

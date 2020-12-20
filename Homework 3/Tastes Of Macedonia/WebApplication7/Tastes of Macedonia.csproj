@@ -200,6 +200,9 @@
     <Compile Include="Models\mytable1.cs">
       <DependentUpon>Restaurants.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Rating.cs">
+      <DependentUpon>Restaurants.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\reservation.cs">
       <DependentUpon>Restaurants.tt</DependentUpon>
     </Compile>
@@ -587,6 +590,7 @@
     <Content Include="Views\Home\Reservations.cshtml" />
     <Content Include="Views\mytables\AddToReservations.cshtml" />
     <Content Include="Views\mytables\MakeReservation.cshtml" />
+    <Content Include="Views\mytables\AddRating.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -18,6 +18,7 @@
     <EntitySet Name="favorites" EntityType="masterModel.favorite" />
     <EntitySet Name="reservations" EntityType="masterModel.reservation" />
     <EntitySet Name="mytable1" EntityType="masterModel.mytable1" />
+    <EntitySet Name="Ratings" EntityType="masterModel.Rating" />
   </EntityContainer>
   <EntityType Name="favorite">
     <Key>
@@ -52,5 +53,14 @@
     <Property Name="opening_hours" Type="String" MaxLength="33" FixedLength="false" Unicode="true" />
     <Property Name="website" Type="String" MaxLength="33" FixedLength="false" Unicode="true" />
     <Property Name="phone" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Rating">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RestaurantId" Type="Int64" Nullable="false" />
+    <Property Name="rating1" Type="Int32" />
+    <Property Name="user" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>

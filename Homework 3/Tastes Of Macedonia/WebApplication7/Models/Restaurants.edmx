@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="user" Type="nvarchar" MaxLength="256" />
           <Property Name="restaurant_name" Type="nvarchar" MaxLength="16" />
         </EntityType>
@@ -51,11 +51,20 @@ warning 6002: The table/view '|DataDirectory|\Restaurant-Finder-DB.mdf.dbo.mytab
           <Property Name="website" Type="nvarchar" MaxLength="33" />
           <Property Name="phone" Type="nvarchar" MaxLength="16" />
         </EntityType>
+        <EntityType Name="Ratings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RestaurantId" Type="bigint" Nullable="false" />
+          <Property Name="rating" Type="int" />
+          <Property Name="user" Type="nvarchar" MaxLength="256" />
+        </EntityType>
         <EntityType Name="reservations">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="user" Type="nvarchar" MaxLength="256" />
           <Property Name="datetime" Type="datetime" />
           <Property Name="time" Type="time" Precision="7" />
@@ -63,6 +72,7 @@ warning 6002: The table/view '|DataDirectory|\Restaurant-Finder-DB.mdf.dbo.mytab
         </EntityType>
         <EntityContainer Name="masterModelStoreContainer">
           <EntitySet Name="favorites" EntityType="Self.favorites" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ratings" EntityType="Self.Ratings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="reservations" EntityType="Self.reservations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="mytable" EntityType="Self.mytable" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -111,6 +121,7 @@ warning 6002: The table/view '|DataDirectory|\Restaurant-Finder-DB.mdf.dbo.mytab
           <EntitySet Name="favorites" EntityType="masterModel.favorite" />
           <EntitySet Name="reservations" EntityType="masterModel.reservation" />
           <EntitySet Name="mytable1" EntityType="masterModel.mytable1" />
+          <EntitySet Name="Ratings" EntityType="masterModel.Rating" />
         </EntityContainer>
         <EntityType Name="favorite">
           <Key>
@@ -145,6 +156,15 @@ warning 6002: The table/view '|DataDirectory|\Restaurant-Finder-DB.mdf.dbo.mytab
           <Property Name="opening_hours" Type="String" MaxLength="33" FixedLength="false" Unicode="true" />
           <Property Name="website" Type="String" MaxLength="33" FixedLength="false" Unicode="true" />
           <Property Name="phone" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RestaurantId" Type="Int64" Nullable="false" />
+          <Property Name="rating1" Type="Int32" />
+          <Property Name="user" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -196,6 +216,16 @@ warning 6002: The table/view '|DataDirectory|\Restaurant-Finder-DB.mdf.dbo.mytab
                 <ScalarProperty Name="lat" ColumnName="lat" />
                 <ScalarProperty Name="lon" ColumnName="lon" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ratings">
+            <EntityTypeMapping TypeName="masterModel.Rating">
+              <MappingFragment StoreEntitySet="Ratings">
+                <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="rating1" ColumnName="rating" />
+                <ScalarProperty Name="RestaurantId" ColumnName="RestaurantId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
