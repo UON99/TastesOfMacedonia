@@ -1,4 +1,5 @@
-﻿@model IEnumerable<WebApplication7.Models.mytable>
+﻿@model WebApplication7.Models.JointIndex
+
 
 @{
     ViewBag.Title = "Index";
@@ -32,16 +33,14 @@
         font-size: 50px;
         margin-left: auto;
         margin-right: auto;
-        top: 180px;      
+        top: 180px;
         text-align: center;
         width: 100%;
         color: #e15915
     }
 
     #namediv {
-
         font-size: 20px;
-        
         text-align: center;
     }
 </style>
@@ -63,65 +62,80 @@
     </div>
 </div>
 <div class="row">
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.lon)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.lat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.cuisine)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.opening_hours)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.website)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.phone)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+    <table class="table" id="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.lon)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.lat)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.cuisine)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.opening_hours)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.website)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.phone)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
-                    @Html.ActionLink("Reserve", "MakeReservation", new { id = item.id })
-                </td>
-            </tr>
-        }
+                <th>
+                    @Html.DisplayNameFor(model=>model.mytables[0].name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.mytables[0].cuisine)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.mytables[0].opening_hours)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.mytables[0].website)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.mytables[0].phone)
+                </th>
 
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.mytables)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cuisine)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.opening_hours)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.website)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.phone)
+                    </td>
+                    <td>
+                        <!--@Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.id })-->
+                        @Html.ActionLink("Reserve", "MakeReservation", new { id = item.id })
+                        |
+
+                        @{
+                            int g = 0;
+                            foreach (var it in Model.favorites)
+                            {
+
+                                if (it.user == ViewBag.userID && it.restaurant_name == item.name)
+                                {
+                                    @Html.ActionLink("Remove from Favorites", "RemoveFromFavorites", new { id = it.Id })
+                                    g = 1;
+                                    break;
+
+                                }
+
+                            }
+                            if (g == 0)
+                            {
+                                @Html.ActionLink("Add To Favorites", "AddToFavorites", new { id = item.id })
+
+                            }
+                        }
+
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
 
 </div>
@@ -131,7 +145,10 @@
 
 @section scripts{
     <script src="~/Scripts/ol.js"></script>
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript">
+
         var list = [];
 
         var marker = {
@@ -188,7 +205,7 @@
             map.addLayer(vectorLayer);
         }
 
-        @foreach (var item in Model) {
+        @foreach (var item in Model.mytables) {
             <text>add_map_point('@item.lat', '@item.lon','@item.name','@item.phone','@item.website','@item.opening_hours')</text>
         }
         var element = document.getElementById('popup');
@@ -241,6 +258,17 @@
 
 
 
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.table').DataTable({
+                "columns": [{ "data": "name", "autoWidth": true },
+                    { "data": "cuisine", "autoWidth": true },
+                    { "data": "opening_hours", "autoWidth": true },
+                    { "data": "website", "autoWidth": true },
+                    { "data": "phone", "autoWidth": true },
+            });
+        });
     </script>
 
 }

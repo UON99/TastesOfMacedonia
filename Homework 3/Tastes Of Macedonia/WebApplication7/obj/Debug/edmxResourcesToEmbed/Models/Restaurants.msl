@@ -28,7 +28,6 @@
       <EntityTypeMapping TypeName="masterModel.reservation">
         <MappingFragment StoreEntitySet="reservations">
           <ScalarProperty Name="restaurant_name" ColumnName="restaurant_name" />
-          <ScalarProperty Name="time" ColumnName="time" />
           <ScalarProperty Name="datetime" ColumnName="datetime" />
           <ScalarProperty Name="user" ColumnName="user" />
           <ScalarProperty Name="Id" ColumnName="Id" />

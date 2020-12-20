@@ -1,4 +1,4 @@
-﻿@model WebApplication7.Models.Item
+﻿@model IEnumerable<WebApplication7.Models.reservation>
 @{
     ViewBag.Title = "Reservations";
 }
@@ -7,18 +7,21 @@
 <div class="container">
     <div class="row">
         <ul>
-            @if (Session["reservation"] == null)
-            {
-                <li>You have no current reservations</li>
-            }
-            @if (Session["reservation"] != null)
-            {
-                foreach (var Item in (List<WebApplication7.Models.Item>)Session["reservation"])
-                {
-                    <li>@Item.restaurant at @Item.time</li>
 
+
+            @foreach (var item in Model)
+            {
+                if (ViewBag.userID == item.user)
+                {
+                    @Html.DisplayFor(modelItem => item.restaurant_name)
+                    @Html.DisplayFor(modelItem => item.datetime)
+                    <br />
                 }
+
+
+
             }
+
 
         </ul>
     </div>

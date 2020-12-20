@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -8,22 +9,69 @@ using WebApplication7.Models;
 
 namespace WebApplication7.Controllers
 {
+
     public class mytablesController : Controller
     {
+        private int reserveid = 0;
         private masterEntities db = new masterEntities();
         private ApplicationDbContext accdb = new ApplicationDbContext();
-        
+
         // GET: mytables
+        [Authorize]
         public ActionResult Index()
         {
-            return View(db.mytables.ToList());
-           
+            
+            
+            JointIndex ji = new JointIndex();
+            ji.favorites = db.favorites.ToList();
+            ji.mytables = db.mytables.ToList();
+            ViewBag.userID= User.Identity.GetUserId();
+            
+            return View(ji);
+
+
+        }
+        
+        public ActionResult AddToFavorites(long id)
+        {
+            
+                mytable mytable = db.mytables.Find(id);
+                favorite fav = new favorite();
+
+                fav.restaurant_name = mytable.name;
+                fav.user = User.Identity.GetUserId();
+                db.favorites.Add(fav);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+
+            
+        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult MakeReservation([Bind(Include = "Id,user,,restaurant_name")] favorite favorite)
+        //{
+        //    var favorite1= new favorite();
+        //    var userID = User.Identity.GetUserId();
+        //    favorite1.restaurant_name = favorite.restaurant_name;
+        //    favorite1.Id = favorite.Id;
+        //    favorite1.user = userID;
+        //    db.favorites.Add(favorite1);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
+        
+        public ActionResult RemoveFromFavorites(long id)
+        {
+            
+                favorite fav = db.favorites.Find(id);
+                db.favorites.Remove(fav);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+
+            
+            //return View();
         }
 
-        public ActionResult Reservations() {
-            return View("AddToReservations");
-        }
-       
         public ActionResult MakeReservation(long id)
         {
             /*
@@ -38,117 +86,42 @@ namespace WebApplication7.Controllers
             if (id != null)
             {
             mytable mytable = db.mytables.Find(id);
-            Item item = new Item();
+            reservation reservation = new reservation();
            
-            item.restaurant = mytable.name;
-            return View(item);
+            reservation.restaurant_name = mytable.name;
+            reservation.user= User.Identity.GetUserId();
+            return View(reservation);
 
             }
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult MakeReservation([Bind(Include = "restaurant,time")] Item item)
+        public ActionResult MakeReservation([Bind(Include = "Id,user,,restaurant_name,datetime")] reservation reservation)
         {
-            if (Session["reservation"] != null)
-            {
-                var reservations = (List<Item>)Session["reservation"];
-                //mytable mytable = db.mytables.Find(id);
-                
-                int flag = 0;
-                for (int i = 0; i < reservations.Count; i++)
-                {
-                    if (item.restaurant == reservations[i].restaurant)
-                    {
-                        flag = 1;
-                    }
-                    else {
-                        flag = 0;
-                    }
-                }
-                if (flag != 1)
-                {
-                    reservations.Add(new Item()
-                    {
-                        restaurant = item.restaurant,
-                        time = item.time
-                        
-                    });
-                }
-
-                Session["reservation"] = reservations;
-                return View("AddToReservations");
-            }
-            else
-            {
-                var reservations = new List<Item>();
-                //mytable mytable = db.mytables.Find(id);
-             
-
-                reservations.Add(new Item()
-                {
-                    restaurant = item.restaurant,
-                    time = item.time
-
-                });
-                Session["reservation"] = reservations;
-                return View("AddToReservations");
-            }
+            var reserve = new reservation();
+            var userID = User.Identity.GetUserId();
+                reserve.restaurant_name = reservation.restaurant_name;
+                reserve.datetime = reservation.datetime;
+                reserve.Id = reservation.Id;
+                reserve.user = userID;     
+                db.reservations.Add(reserve);      
+                db.SaveChanges();
+                return RedirectToAction("AddToReservations");        
         }
-        public ActionResult AddToReservations(long id)
-        {
-            if (Session["reservation"] != null)
-            {
-                var reservations = (List<Item>)Session["reservation"];
-                mytable mytable = db.mytables.Find(id);
-                
-                if (mytable == null)
-                {
-                    return HttpNotFound();
-                }
-                int flag = 0;
-                for (int i = 0; i < reservations.Count; i++) {
-                    if (mytable.name == reservations[i].restaurant) {
-                        flag = 1;
-                    }
-                }
-                if (flag != 1) {
-                    reservations.Add(new Item()
-                    {
-                        restaurant = mytable.name,
-                        time = DateTime.UtcNow
+        [Authorize]
+        public ActionResult AddToReservations()
+        {  
+            var userID = User.Identity.GetUserId();
 
-                    });
-                }
-                
-                Session["reservation"] = reservations;
-                return View();
-            }
-            else {
-                var reservations = new List<Item>();
-                mytable mytable = db.mytables.Find(id);
-                
+            ViewBag.userid = userID;
 
-                if (mytable == null)
-                {
-                    return HttpNotFound();
-                }
+                return View(db.reservations.ToList());
 
-                reservations.Add(new Item()
-                {
-                    restaurant = mytable.name,
-                    time = DateTime.UtcNow
-
-                });
-                Session["reservation"] = reservations;
-                return View();
-            }
-            
-            
-            
+               
         }
-        // GET: mytables/Details/5
-        public ActionResult Details(long? id)
+            // GET: mytables/Details/5
+            public ActionResult Details(long? id)
         {
             if (id == null)
             {

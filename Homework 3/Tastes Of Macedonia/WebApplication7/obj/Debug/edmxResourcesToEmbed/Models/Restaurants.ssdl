@@ -4,7 +4,7 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="user" Type="nvarchar" MaxLength="256" />
     <Property Name="restaurant_name" Type="nvarchar" MaxLength="16" />
   </EntityType>
@@ -46,7 +46,7 @@ warning 6002: The table/view '|DataDirectory|\Restaurant-Finder-DB.mdf.dbo.mytab
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="user" Type="nvarchar" MaxLength="256" />
     <Property Name="datetime" Type="datetime" />
     <Property Name="time" Type="time" Precision="7" />

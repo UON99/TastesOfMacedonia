@@ -17,7 +17,6 @@ namespace WebApplication7.Models
         public int Id { get; set; }
         public string user { get; set; }
         public Nullable<System.DateTime> datetime { get; set; }
-        public Nullable<System.TimeSpan> time { get; set; }
         public string restaurant_name { get; set; }
     }
 }
