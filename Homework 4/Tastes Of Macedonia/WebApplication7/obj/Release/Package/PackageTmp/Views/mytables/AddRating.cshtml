@@ -1,0 +1,93 @@
+﻿@model WebApplication7.Models.Rating
+
+@{
+    ViewBag.Title = "AddRating";
+}
+    <style>
+        .glyphicon {
+            font-size: 25px;
+            text-shadow: 0 0 1px black,0 0 1px black,0 0 1px black,0 0 1px black;
+            color: gold;
+        }
+    </style>
+    <script>
+        function something(item) {
+
+            var parent = item.parentNode;
+            var children = parent.children;
+            for (var i = 0; i < item.getAttribute('value'); i++) {
+                $(children[i]).attr("class", "glyphicon glyphicon-star");
+            }
+            for (var i = item.getAttribute('value'); i <= 5; i++) {
+                $(children[i]).attr("class", "glyphicon glyphicon-star-empty");
+            }
+
+            $("#label").val(item.getAttribute('value'));
+
+        }
+        function somethingelse(item) {
+            var parent = item.parentNode;
+            var children = parent.children;
+            for (var i = 0; i < item.getAttribute('value'); i++) {
+                $(children[i]).attr("class", "glyphicon glyphicon-star");
+            }
+
+        }
+
+        function selected(item) {
+            var children = item.children;
+
+            var rating = $("#label").val();
+            for (var i = 0; i < rating; i++) {
+                $(children[i]).attr("class", "glyphicon glyphicon-star");
+            }
+        }
+        function mouseout(item) {
+            var parent = item.parentNode;
+            var children = parent.children;
+            for (var i = 0; i < item.getAttribute('value'); i++) {
+                $(children[i]).attr("class", "glyphicon glyphicon-star-empty");
+            }
+        }
+    </script>
+<h2>AddRating</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Rating</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+       
+
+        <div class="form-group">
+            <label><b>Rate @ViewBag.restaurant_name: </b></label>
+            <div id="parent" onmouseout="selected(this)">
+                <span class="glyphicon glyphicon-star-empty" value="1" onclick="something(this)" onmouseover="somethingelse(this)" onmouseout="mouseout(this)"></span>
+                <span class="glyphicon glyphicon-star-empty" value="2" onclick="something(this)" onmouseover="somethingelse(this)" onmouseout="mouseout(this)"></span>
+                <span class="glyphicon glyphicon-star-empty" value="3" onclick="something(this)" onmouseover="somethingelse(this)" onmouseout="mouseout(this)"></span>
+                <span class="glyphicon glyphicon-star-empty" value="4" onclick="something(this)" onmouseover="somethingelse(this)" onmouseout="mouseout(this)"></span>
+                <span class="glyphicon glyphicon-star-empty" value="5" onclick="something(this)" onmouseover="somethingelse(this)" onmouseout="mouseout(this)"></span>
+            </div>
+            <div>
+                <input type="hidden" id="label" name="rating1" />
+                <input type="hidden" id="label" name="RestaurantId" value="@Model.RestaurantId"/>
+                <input type="hidden" name="user" value="@ViewBag.UserID" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" style="width:100px"/>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="masterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="favorites">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user" Type="nvarchar" MaxLength="256" />
+          <Property Name="restaurant_name" Type="nvarchar" MaxLength="16" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view '|DataDirectory|\Restaurant-Finder-DB.mdf.dbo.mytable' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="mytable">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="lon" />
+            <PropertyRef Name="lat" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="cuisine" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="lon" Type="decimal" Precision="18" Scale="15" Nullable="false" />
+          <Property Name="lat" Type="decimal" Precision="18" Scale="15" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="cuisine" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="opening_hours" Type="nvarchar" MaxLength="33" />
+          <Property Name="website" Type="nvarchar" MaxLength="33" />
+          <Property Name="phone" Type="nvarchar" MaxLength="16" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view '|DataDirectory|\Restaurant-Finder-DB.mdf.dbo.mytables' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="mytables">
+          <Key>
+            <PropertyRef Name="id" />
+            
+            
+            
+            
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="lon" Type="decimal" Precision="18" Scale="15" Nullable="false" />
+          <Property Name="lat" Type="decimal" Precision="18" Scale="15" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="cuisine" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="opening_hours" Type="nvarchar" MaxLength="33" />
+          <Property Name="website" Type="nvarchar" MaxLength="33" />
+          <Property Name="phone" Type="nvarchar" MaxLength="16" />
+        </EntityType>
+        <EntityType Name="Ratings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RestaurantId" Type="bigint" Nullable="false" />
+          <Property Name="rating" Type="int" />
+          <Property Name="user" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="reservations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user" Type="nvarchar" MaxLength="256" />
+          <Property Name="datetime" Type="datetime" />
+          <Property Name="time" Type="time" Precision="7" />
+          <Property Name="restaurant_name" Type="nvarchar" MaxLength="16" />
+        </EntityType>
+        <EntityContainer Name="masterModelStoreContainer">
+          <EntitySet Name="favorites" EntityType="Self.favorites" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ratings" EntityType="Self.Ratings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reservations" EntityType="Self.reservations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="mytable" EntityType="Self.mytable" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [mytable].[id] AS [id], 
+    [mytable].[lon] AS [lon], 
+    [mytable].[lat] AS [lat], 
+    [mytable].[name] AS [name], 
+    [mytable].[cuisine] AS [cuisine], 
+    [mytable].[opening_hours] AS [opening_hours], 
+    [mytable].[website] AS [website], 
+    [mytable].[phone] AS [phone]
+    FROM [dbo].[mytable] AS [mytable]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="mytables" EntityType="Self.mytables" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [mytables].[id] AS [id], 
+    [mytables].[lon] AS [lon], 
+    [mytables].[lat] AS [lat], 
+    [mytables].[name] AS [name], 
+    [mytables].[cuisine] AS [cuisine], 
+    [mytables].[opening_hours] AS [opening_hours], 
+    [mytables].[website] AS [website], 
+    [mytables].[phone] AS [phone]
+    FROM [dbo].[mytables] AS [mytables]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="masterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="mytable">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="lon" Type="Decimal" Precision="18" Scale="15" Nullable="false" />
+          <Property Name="lat" Type="Decimal" Precision="18" Scale="15" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cuisine" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="opening_hours" Type="String" MaxLength="33" FixedLength="false" Unicode="true" />
+          <Property Name="website" Type="String" MaxLength="33" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="masterEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="mytables" EntityType="Self.mytable" />
+          <EntitySet Name="favorites" EntityType="masterModel.favorite" />
+          <EntitySet Name="reservations" EntityType="masterModel.reservation" />
+          <EntitySet Name="mytable1" EntityType="masterModel.mytable1" />
+          <EntitySet Name="Ratings" EntityType="masterModel.Rating" />
+        </EntityContainer>
+        <EntityType Name="favorite">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="restaurant_name" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="reservation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" annotation:StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="datetime" Type="DateTime" Precision="3" />
+          <Property Name="restaurant_name" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="mytable1">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="lon" />
+            <PropertyRef Name="lat" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="cuisine" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="lon" Type="Decimal" Nullable="false" Precision="18" Scale="15" />
+          <Property Name="lat" Type="Decimal" Nullable="false" Precision="18" Scale="15" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="cuisine" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="opening_hours" Type="String" MaxLength="33" FixedLength="false" Unicode="true" />
+          <Property Name="website" Type="String" MaxLength="33" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RestaurantId" Type="Int64" Nullable="false" />
+          <Property Name="rating1" Type="Int32" />
+          <Property Name="user" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="masterModelStoreContainer" CdmEntityContainer="masterEntities">
+    <EntitySetMapping Name="mytables">
+      <EntityTypeMapping TypeName="IsTypeOf(masterModel.mytable)">
+        <MappingFragment StoreEntitySet="mytables">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="lon" ColumnName="lon" />
+          <ScalarProperty Name="lat" ColumnName="lat" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="cuisine" ColumnName="cuisine" />
+          <ScalarProperty Name="opening_hours" ColumnName="opening_hours" />
+          <ScalarProperty Name="website" ColumnName="website" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+          <EntitySetMapping Name="favorites">
+            <EntityTypeMapping TypeName="masterModel.favorite">
+              <MappingFragment StoreEntitySet="favorites">
+                <ScalarProperty Name="restaurant_name" ColumnName="restaurant_name" />
+                <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reservations">
+            <EntityTypeMapping TypeName="masterModel.reservation">
+              <MappingFragment StoreEntitySet="reservations">
+                <ScalarProperty Name="restaurant_name" ColumnName="restaurant_name" />
+                <ScalarProperty Name="datetime" ColumnName="datetime" />
+                <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mytable1">
+            <EntityTypeMapping TypeName="masterModel.mytable1">
+              <MappingFragment StoreEntitySet="mytable">
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="website" ColumnName="website" />
+                <ScalarProperty Name="opening_hours" ColumnName="opening_hours" />
+                <ScalarProperty Name="cuisine" ColumnName="cuisine" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
+                <ScalarProperty Name="lon" ColumnName="lon" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ratings">
+            <EntityTypeMapping TypeName="masterModel.Rating">
+              <MappingFragment StoreEntitySet="Ratings">
+                <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="rating1" ColumnName="rating" />
+                <ScalarProperty Name="RestaurantId" ColumnName="RestaurantId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<WebApplication7.Models.reservation>
+@{
+    ViewBag.Title = "Reservations";
+}
+
+<h2>Reservations</h2>
+<div class="container">
+    <div class="row">
+        <ul>
+
+
+            @foreach (var item in Model)
+            {
+                if (ViewBag.userID == item.user)
+                {
+                    @Html.DisplayFor(modelItem => item.restaurant_name)
+                    @Html.DisplayFor(modelItem => item.datetime)
+                    <br />
+                }
+
+
+
+            }
+
+
+        </ul>
+    </div>
+</div>
+
+

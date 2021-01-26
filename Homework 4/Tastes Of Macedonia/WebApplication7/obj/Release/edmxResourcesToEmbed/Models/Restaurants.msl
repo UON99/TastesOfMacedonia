@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="masterModelStoreContainer" CdmEntityContainer="masterEntities">
+    <EntitySetMapping Name="mytables">
+      <EntityTypeMapping TypeName="IsTypeOf(masterModel.mytable)">
+        <MappingFragment StoreEntitySet="mytables">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="lon" ColumnName="lon" />
+          <ScalarProperty Name="lat" ColumnName="lat" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="cuisine" ColumnName="cuisine" />
+          <ScalarProperty Name="opening_hours" ColumnName="opening_hours" />
+          <ScalarProperty Name="website" ColumnName="website" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="favorites">
+      <EntityTypeMapping TypeName="masterModel.favorite">
+        <MappingFragment StoreEntitySet="favorites">
+          <ScalarProperty Name="restaurant_name" ColumnName="restaurant_name" />
+          <ScalarProperty Name="user" ColumnName="user" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="reservations">
+      <EntityTypeMapping TypeName="masterModel.reservation">
+        <MappingFragment StoreEntitySet="reservations">
+          <ScalarProperty Name="restaurant_name" ColumnName="restaurant_name" />
+          <ScalarProperty Name="datetime" ColumnName="datetime" />
+          <ScalarProperty Name="user" ColumnName="user" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="mytable1">
+      <EntityTypeMapping TypeName="masterModel.mytable1">
+        <MappingFragment StoreEntitySet="mytable">
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="website" ColumnName="website" />
+          <ScalarProperty Name="opening_hours" ColumnName="opening_hours" />
+          <ScalarProperty Name="cuisine" ColumnName="cuisine" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="lat" ColumnName="lat" />
+          <ScalarProperty Name="lon" ColumnName="lon" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ratings">
+      <EntityTypeMapping TypeName="masterModel.Rating">
+        <MappingFragment StoreEntitySet="Ratings">
+          <ScalarProperty Name="user" ColumnName="user" />
+          <ScalarProperty Name="rating1" ColumnName="rating" />
+          <ScalarProperty Name="RestaurantId" ColumnName="RestaurantId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
