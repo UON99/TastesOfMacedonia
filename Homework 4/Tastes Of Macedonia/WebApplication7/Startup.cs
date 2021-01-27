@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿
+using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(WebApplication7.Startup))]
@@ -8,7 +9,8 @@ namespace WebApplication7
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
+        ConfigureAuth(app);
         }
+     
     }
 }

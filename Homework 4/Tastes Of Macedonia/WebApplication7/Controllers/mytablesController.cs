@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using WebApplication7.Helper;
 using WebApplication7.Models;
 
 namespace WebApplication7.Controllers
@@ -17,9 +21,15 @@ namespace WebApplication7.Controllers
         private ApplicationDbContext accdb = new ApplicationDbContext();
 
         // GET: mytables
+
+        ResApi api = new ResApi();
+
+     
         [Authorize]
         public ActionResult Index()
         {
+
+
 
             JointIndex ji = new JointIndex();
             ji.favorites = db.favorites.ToList();
@@ -31,6 +41,7 @@ namespace WebApplication7.Controllers
 
 
         }
+
         
         public ActionResult AddToFavorites(long id)
         {
@@ -102,7 +113,7 @@ namespace WebApplication7.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
         }
-
+        
         public ActionResult MakeReservation(long id)
         {
             
@@ -110,40 +121,63 @@ namespace WebApplication7.Controllers
             {
             mytable mytable = db.mytables.Find(id);
             reservation reservation = new reservation();
-           
+            
             reservation.restaurant_name = mytable.name;
             reservation.user= User.Identity.GetUserId();
+
             return View(reservation);
 
             }
             return View();
         }
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult MakeReservation([Bind(Include = "Id,user,,restaurant_name,datetime")] reservation reservation)
+        public ActionResult MakeReservation(reservation reservation)
         {
-            var reserve = new reservation();
-            
-            var userID = User.Identity.GetUserId();
-                reserve.restaurant_name = reservation.restaurant_name;
-                reserve.datetime = reservation.datetime;
-                reserve.Id = reservation.Id;
-                reserve.user = userID;     
-                db.reservations.Add(reserve);
-                db.SaveChanges();
-                return RedirectToAction("AddToReservations");
+            using (var client = api.Initial())
+            {               
+                //HTTP POST
+                var postTask = client.PostAsJsonAsync<reservation>("api/reservations", new reservation()
+                {
+                    Id = reservation.Id,
+                    restaurant_name = reservation.restaurant_name,
+                    datetime = reservation.datetime,
+                    user = User.Identity.GetUserId(),
+            }) ;
+                postTask.Wait();
+
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+
+            ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+
+            return View(reservation);
         }
+
         [Authorize]
-        public ActionResult AddToReservations()
-        {  
+        public async Task<ActionResult> AddToReservations()
+        {
+            List<reservation> reservations = new List<reservation>();
+            HttpClient client = api.Initial();
+            HttpResponseMessage res = await client.GetAsync("api/reservations");
+            if (res.IsSuccessStatusCode)
+            {
+                var results = res.Content.ReadAsStringAsync().Result;
+                reservations = JsonConvert.DeserializeObject<List<reservation>>(results);
+                reservations = reservations.ToList();
+            }
+
             var userID = User.Identity.GetUserId();
 
             ViewBag.userid = userID;
 
-            return View(db.reservations.ToList());
-
-               
+            return View(reservations);
         }
+
             // GET: mytables/Details/5
             public ActionResult Details(long? id)
         {
