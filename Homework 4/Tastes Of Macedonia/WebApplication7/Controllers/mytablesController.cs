@@ -16,9 +16,8 @@ namespace WebApplication7.Controllers
 
     public class mytablesController : Controller
     {
-        private int reserveid = 0;
+        
         private masterEntities db = new masterEntities();
-        private ApplicationDbContext accdb = new ApplicationDbContext();
 
         // GET: mytables
 
@@ -30,67 +29,56 @@ namespace WebApplication7.Controllers
         {
 
 
-
-            JointIndex ji = new JointIndex();
-            ji.favorites = db.favorites.ToList();
-            ji.mytables = db.mytables.ToList();
-            ji.ratings = db.Ratings.ToList();
+            //Showing main Restaurant view, using joint index to simultanously show favorites, restaurants and ratings.
+            JointIndex joint_index = new JointIndex();
+            joint_index.favorites = db.favorites.ToList();
+            joint_index.mytables = db.mytables.ToList();
+            joint_index.ratings = db.Ratings.ToList();
             ViewBag.userID= User.Identity.GetUserId();
             
-            return View(ji);
+            return View(joint_index);
 
 
         }
 
-        
+        //This method is used to add entries to the favorites db.
         public ActionResult AddToFavorites(long id)
         {
             
-                mytable mytable = db.mytables.Find(id);
-                favorite fav = new favorite();
+                mytable restaurant = db.mytables.Find(id);
+                favorite favorite = new favorite();
 
-                fav.restaurant_name = mytable.name;
-                fav.user = User.Identity.GetUserId();
-                db.favorites.Add(fav);
+                favorite.restaurant_name = restaurant.name;
+                favorite.user = User.Identity.GetUserId();
+                db.favorites.Add(favorite);
                 db.SaveChanges();
                 return RedirectToAction("Index");
 
             
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult MakeReservation([Bind(Include = "Id,user,,restaurant_name")] favorite favorite)
-        //{
-        //    var favorite1= new favorite();
-        //    var userID = User.Identity.GetUserId();
-        //    favorite1.restaurant_name = favorite.restaurant_name;
-        //    favorite1.Id = favorite.Id;
-        //    favorite1.user = userID;
-        //    db.favorites.Add(favorite1);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-        
+        //This is a method used to Remove entries from the favorites db.
         public ActionResult RemoveFromFavorites(long id)
         {
             
-                favorite fav = db.favorites.Find(id);
-                db.favorites.Remove(fav);
+                favorite favorite = db.favorites.Find(id);
+                db.favorites.Remove(favorite);
                 db.SaveChanges();
                 return RedirectToAction("Index");
 
             
             //return View();
         }
+
+        //This GET method is used to add Ratings.
         public ActionResult AddRating(long? id)
         {
             
             if (id != null)
             {
-            mytable mytable = db.mytables.Find(id);
+            mytable restaurant = db.mytables.Find(id);
             Rating rating = new Rating();
-                ViewBag.restaurant_name = mytable.name;
-                rating.RestaurantId = mytable.id;
+                ViewBag.restaurant_name = restaurant.name;
+                rating.RestaurantId = restaurant.id;
                 rating.user = User.Identity.GetUserId();
 
                 return View(rating);
@@ -98,6 +86,7 @@ namespace WebApplication7.Controllers
             }
             return View();
         }
+        //This is the POST method to add Rating
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddRating([Bind(Include = "id,RestaurantId,rating1,user")] Rating rating)
@@ -114,15 +103,16 @@ namespace WebApplication7.Controllers
                 return RedirectToAction("Index");
         }
         
+        //This is a GET method for making a reservation
         public ActionResult MakeReservation(long id)
         {
             
             if (id != null)
             {
-            mytable mytable = db.mytables.Find(id);
+            mytable restaurant = db.mytables.Find(id);
             reservation reservation = new reservation();
             
-            reservation.restaurant_name = mytable.name;
+            reservation.restaurant_name = restaurant.name;
             reservation.user= User.Identity.GetUserId();
 
             return View(reservation);
@@ -131,6 +121,7 @@ namespace WebApplication7.Controllers
             return View();
         }
 
+        //POST method for making a reservation
         [HttpPost]
         public ActionResult MakeReservation(reservation reservation)
         {
@@ -158,120 +149,28 @@ namespace WebApplication7.Controllers
             return View(reservation);
         }
 
+        //Method for Adding a reservation
         [Authorize]
         public async Task<ActionResult> AddToReservations()
         {
             List<reservation> reservations = new List<reservation>();
             HttpClient client = api.Initial();
-            HttpResponseMessage res = await client.GetAsync("api/reservations");
-            if (res.IsSuccessStatusCode)
+            HttpResponseMessage reservationMessage = await client.GetAsync("api/reservations");
+            if (reservationMessage.IsSuccessStatusCode)
             {
-                var results = res.Content.ReadAsStringAsync().Result;
+                var results = reservationMessage.Content.ReadAsStringAsync().Result;
                 reservations = JsonConvert.DeserializeObject<List<reservation>>(results);
                 reservations = reservations.ToList();
             }
 
-            var userID = User.Identity.GetUserId();
+            var user_id = User.Identity.GetUserId();
 
-            ViewBag.userid = userID;
+            ViewBag.user_id = user_id;
 
             return View(reservations);
         }
 
-            // GET: mytables/Details/5
-            public ActionResult Details(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            mytable mytable = db.mytables.Find(id);
-            if (mytable == null)
-            {
-                return HttpNotFound();
-            }
-            return View(mytable);
-        }
-
-        // GET: mytables/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: mytables/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,lon,lat,name,cuisine,opening_hours,website,phone")] mytable mytable)
-        {
-            if (ModelState.IsValid)
-            {
-                db.mytables.Add(mytable);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(mytable);
-        }
-
-        // GET: mytables/Edit/5
-        public ActionResult Edit(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            mytable mytable = db.mytables.Find(id);
-            if (mytable == null)
-            {
-                return HttpNotFound();
-            }
-            return View(mytable);
-        }
-
-        // POST: mytables/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,lon,lat,name,cuisine,opening_hours,website,phone")] mytable mytable)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(mytable).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(mytable);
-        }
-
-        // GET: mytables/Delete/5
-        public ActionResult Delete(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            mytable mytable = db.mytables.Find(id);
-            if (mytable == null)
-            {
-                return HttpNotFound();
-            }
-            return View(mytable);
-        }
-
-        // POST: mytables/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(long id)
-        {
-            mytable mytable = db.mytables.Find(id);
-            db.mytables.Remove(mytable);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+       
 
         protected override void Dispose(bool disposing)
         {

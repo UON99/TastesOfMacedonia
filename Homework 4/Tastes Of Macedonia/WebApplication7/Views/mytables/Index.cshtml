@@ -52,7 +52,7 @@
         z-index:0;
         text-align: center;
         width: 100%;
-        color: #e15915
+        color: #e15915;
     }
 
     #namediv {
@@ -62,11 +62,9 @@
     }
 </style>
 
-<h2>Index</h2>
+<h2>Tastes of Macedonia</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 
 <div class="row">
     <div id="map" class="map"></div>
@@ -94,9 +92,10 @@
 <div class="row">
     <table class="table" id="table">
         <thead>
+            <!-- The following content in thead lists all titles(variable names) of the restaurants.-->
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model=>model.mytables[0].name)
+                    @Html.DisplayNameFor(model => model.mytables[0].name)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.mytables[0].cuisine)
@@ -114,7 +113,7 @@
 
             </tr>
         </thead>
-        <tbody>
+        <tbody><!-- The following content in tbody lists all content in the restaurants.-->
             @foreach (var item in Model.mytables)
             {
                 
@@ -140,9 +139,7 @@
                         @Html.DisplayFor(modelItem => item.phone)
                     </td>
                     <td>
-                        <!--@Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-    @Html.ActionLink("Details", "Details", new { id = item.id }) |
-    @Html.ActionLink("Delete", "Delete", new { id = item.id })-->
+                       
 
                         @Html.ActionLink("Reserve", "MakeReservation", new { id = item.id })
                         |
@@ -235,6 +232,7 @@
 
 
 @section scripts{
+    <!--inclusion of scripts-->
     <script src="~/Scripts/ol.js"></script>
     <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
@@ -244,7 +242,7 @@
         var attribution = new ol.control.Attribution({
             collapsible: false
         });
-
+        //map implementation with openlayers with variables to zoom and correctly show lon lat to Skopje region.
         var map = new ol.Map({
             controls: ol.control.defaults({ attribution: false }).extend([attribution]),
             layers: [
@@ -260,10 +258,10 @@
                 zoom: 12
             })
         });
+        //This is a function to add the map points for each restaurant with their respective features
+        function AddMapPoint(lat, lng, name,cuisine, phone, website, opening) {
 
-        function add_map_point(lat, lng, name,cuisine, phone, website, opening) {
-         
-            var vectorLayer = new ol.layer.Vector({
+            var vector_layer = new ol.layer.Vector({
                 source: new ol.source.Vector({
                     features: [new ol.Feature({
                         name: name,
@@ -283,26 +281,28 @@
                     })
                 })
             });
-            map.addLayer(vectorLayer);
+            map.addLayer(vector_layer);
         }
-
+        //iterating all restaurants and adding map points
         @foreach (var item in Model.mytables) {
-            <text>add_map_point('@item.lat', '@item.lon','@item.name','@item.cuisine','@item.phone','@item.website','@item.opening_hours')</text>
+            <text>AddMapPoint('@item.lat', '@item.lon','@item.name','@item.cuisine','@item.phone','@item.website','@item.opening_hours')</text>
         }
         var element = document.getElementById('popup');
+        //declaration of openlayers overlay.
         var popup = new ol.Overlay({
             element: element,
             positioning: 'bottom-center',
             stopEvent: false
         });
         map.addOverlay(popup);
+        //on click function to show overlays
         map.on('singleclick', function (evt) {
             var feature = map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
                 return feature;
             });
             if (feature) {
 
-                var namediv = document.getElementById('namediv');
+                var name = document.getElementById('namediv');
                 var cuisine = document.getElementById('cuisine');
                 var phone = document.getElementById('phone');
                 var website = document.getElementById('website');
@@ -313,7 +313,7 @@
                 element.style.display = 'block';
                 element.style.fontSize = '10px';
 
-                namediv.innerHTML = feature.get('name');
+                name.innerHTML = feature.get('name');
                 cuisine.innerHTML = feature.get('cuisine');
                 phone.innerHTML = feature.get('phone');
                 website.innerHTML = feature.get('website');
@@ -330,25 +330,25 @@
             var transformed_coordinate = ol.proj.transform(coord, "EPSG:900913", "EPSG:4326");
             console.log(transformed_coordinate);
             var div = document.getElementById("map");
-            if (evt == this.vectorLayer) {
-                var divtmp = document.createElement("div");
-                divtmp.style.width = '100px';
-                divtmp.style.height = '100px';
-                divtmp.style.background = 'blue';
+            if (evt == this.vector_layer) {
+                var div_temp = document.createElement("div");
+                div_temp.style.width = '100px';
+                div_temp.style.height = '100px';
+                div_temp.style.background = 'blue';
             }
         });
 
 
-
     </script>
     <script type="text/javascript">
+        //jQuery datatable sort function
         $(document).ready(function () {
             $('.table').DataTable({
                 "columns": [{ "data": "name", "autoWidth": true },
                     { "data": "cuisine", "autoWidth": true },
                     { "data": "opening_hours", "autoWidth": true },
                     { "data": "website", "autoWidth": true },
-                    { "data": "phone", "autoWidth": true },
+                    { "data": "phone", "autoWidth": true }]
             });
         });
     </script>

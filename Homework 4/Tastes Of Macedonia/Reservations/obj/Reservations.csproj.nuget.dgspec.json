@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Sava-PC\\Desktop\\SDA\\Homework 4\\Tastes Of Macedonia\\Reservations\\Reservations.csproj": {}
+    "C:\\Users\\Viktor\\Documents\\GitHub\\Team-Allo-Allo-SDA\\Homework 4\\Tastes Of Macedonia\\Reservations\\Reservations.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Sava-PC\\Desktop\\SDA\\Homework 4\\Tastes Of Macedonia\\Reservations\\Reservations.csproj": {
+    "C:\\Users\\Viktor\\Documents\\GitHub\\Team-Allo-Allo-SDA\\Homework 4\\Tastes Of Macedonia\\Reservations\\Reservations.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Sava-PC\\Desktop\\SDA\\Homework 4\\Tastes Of Macedonia\\Reservations\\Reservations.csproj",
+        "projectUniqueName": "C:\\Users\\Viktor\\Documents\\GitHub\\Team-Allo-Allo-SDA\\Homework 4\\Tastes Of Macedonia\\Reservations\\Reservations.csproj",
         "projectName": "Reservations",
-        "projectPath": "C:\\Users\\Sava-PC\\Desktop\\SDA\\Homework 4\\Tastes Of Macedonia\\Reservations\\Reservations.csproj",
-        "packagesPath": "C:\\Users\\Sava-PC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Sava-PC\\Desktop\\SDA\\Homework 4\\Tastes Of Macedonia\\Reservations\\obj\\",
+        "projectPath": "C:\\Users\\Viktor\\Documents\\GitHub\\Team-Allo-Allo-SDA\\Homework 4\\Tastes Of Macedonia\\Reservations\\Reservations.csproj",
+        "packagesPath": "C:\\Users\\Viktor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Viktor\\Documents\\GitHub\\Team-Allo-Allo-SDA\\Homework 4\\Tastes Of Macedonia\\Reservations\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Sava-PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Viktor\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

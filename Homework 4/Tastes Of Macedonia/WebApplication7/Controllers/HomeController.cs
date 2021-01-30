@@ -1,11 +1,9 @@
 ﻿
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using WebApplication7.Helper;
 using WebApplication7.Models;
@@ -13,7 +11,17 @@ namespace WebApplication7.Controllers
 {
     public class HomeController : Controller
     {
+
         ResApi api = new ResApi();
+
+        public void GetReservations(List<reservation> reservations, HttpResponseMessage res)
+        {
+
+            var results = res.Content.ReadAsStringAsync().Result;
+            reservations = JsonConvert.DeserializeObject<List<reservation>>(results);
+            reservations = reservations.ToList();
+
+        }
 
 
         public async Task<ActionResult> Index()
@@ -23,9 +31,7 @@ namespace WebApplication7.Controllers
             HttpResponseMessage res = await client.GetAsync("api/reservations");
             if (res.IsSuccessStatusCode)
             {
-                var results = res.Content.ReadAsStringAsync().Result;
-                reservations = JsonConvert.DeserializeObject<List<reservation>>(results);
-                reservations = reservations.ToList();
+                GetReservations(reservations, res);
             }
 
             return View(reservations);

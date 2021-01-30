@@ -7,11 +7,10 @@
 <div class="container">
     <div class="row">
         <ul>
-
-
+            
             @foreach (var item in Model)
             {
-                if (ViewBag.userID == item.user)
+                if (ViewBag.user_id == item.user)
                 {
                     @Html.DisplayFor(modelItem => item.restaurant_name)
                     @Html.DisplayFor(modelItem => item.datetime)

@@ -641,10 +641,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\mytables\Create.cshtml" />
-    <Content Include="Views\mytables\Delete.cshtml" />
-    <Content Include="Views\mytables\Details.cshtml" />
-    <Content Include="Views\mytables\Edit.cshtml" />
     <Content Include="Views\mytables\Index.cshtml" />
     <Content Include="Views\Home\Reservations.cshtml" />
     <Content Include="Views\mytables\AddToReservations.cshtml" />
