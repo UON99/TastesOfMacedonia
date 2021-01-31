@@ -1,0 +1,23 @@
+services:
+  reservations:
+    build:
+      context: C:\Users\Sava-PC\Desktop\SDA\Homework 4\Tastes Of Macedonia
+      dockerfile: Reservations\Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+    image: reservations
+    ports:
+    - target: 80
+    - target: 443
+    volumes:
+    - C:\Users\Sava-PC\AppData\Roaming\ASP.NET\Https:C:\Users\ContainerUser\AppData\Roaming\ASP.NET\Https:ro
+    - C:\Users\Sava-PC\AppData\Roaming\Microsoft\UserSecrets:C:\Users\ContainerUser\AppData\Roaming\Microsoft\UserSecrets:ro
+  tastesofmacedonia:
+    build:
+      context: C:\Users\Sava-PC\Desktop\SDA\Homework 4\Tastes Of Macedonia\WebApplication7
+      dockerfile: Dockerfile
+    image: tastesofmacedonia
+    ports:
+    - target: 80
+version: '3.4'

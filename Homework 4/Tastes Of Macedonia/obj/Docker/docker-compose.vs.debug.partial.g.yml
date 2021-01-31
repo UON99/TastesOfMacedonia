@@ -1,0 +1,49 @@
+version: '3.4'
+
+services:
+  reservations:
+    image: reservations:dev
+    container_name: Reservations
+    build:
+      target: base
+      labels:
+        com.microsoft.created-by: "visual-studio"
+        com.microsoft.visual-studio.project-name: "Reservations"
+    environment:
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+      - NUGET_PACKAGES=C:\.nuget\packages
+      - ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=true
+      #- NUGET_FALLBACK_PACKAGES=$container_paths_to_fallback_packages_reservations$
+    volumes:
+      - C:\Users\Sava-PC\Desktop\SDA\Homework 4\Tastes Of Macedonia\Reservations:C:\app
+      - C:\Users\Sava-PC\Desktop\SDA\Homework 4\Tastes Of Macedonia:C:\src
+      - C:\Users\Sava-PC\onecoremsvsmon:C:\remote_debugger:ro
+#$nuget_volume_mapping_reservations$
+      - ${APPDATA}/ASP.NET/Https:C:\Users\ContainerUser\AppData\Roaming\ASP.NET\Https:ro
+      - ${APPDATA}/Microsoft/UserSecrets:C:\Users\ContainerUser\AppData\Roaming\Microsoft\UserSecrets:ro
+
+    entrypoint: C:\\remote_debugger\\x64\\msvsmon.exe /noauth /anyuser /silent /nostatus /noclrwarn /nosecuritywarn /nofirewallwarn /nowowwarn /timeout:2147483646 
+    labels:
+      com.microsoft.visualstudio.debuggee.program: "\"C:\\Program Files\\dotnet\\dotnet.exe\""
+      #com.microsoft.visualstudio.debuggee.arguments: " $debuggee_arguments_probing_paths_reservations$ \"C:\\app\\bin\\Release\\netcoreapp3.1\\Reservations.dll\""
+      com.microsoft.visualstudio.debuggee.workingdirectory: "C:\\app"
+      com.microsoft.visualstudio.debuggee.killprogram: "C:\\remote_debugger\\x64\\utils\\KillProcess.exe dotnet.exe"
+
+  tastesofmacedonia:
+    image: tastesofmacedonia:dev
+    container_name: Tastes_of_Macedonia
+    build:
+      args:
+        source: obj/Docker/empty/
+      labels:
+        com.microsoft.created-by: "visual-studio"
+        com.microsoft.visual-studio.project-name: "Tastes of Macedonia"
+    volumes:
+      - C:\Users\Sava-PC\Desktop\SDA\Homework 4\Tastes Of Macedonia\WebApplication7:C:\inetpub\wwwroot
+      - :C:\remote_debugger:ro
+    entrypoint: cmd /c "start /B C:\\ServiceMonitor.exe w3svc & C:\\remote_debugger\\x64\\msvsmon.exe /noauth /anyuser /silent /nostatus /noclrwarn /nosecuritywarn /nofirewallwarn /nowowwarn /timeout:2147483646"
+    environment:
+      - DEV_ENVIRONMENT=1
+      - VBCSCOMPILER_TTL=604800
+
+

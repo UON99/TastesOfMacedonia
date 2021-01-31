@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  tastesofmacedonia:
+    image: ${DOCKER_REGISTRY-}tastesofmacedonia
+    build:
+      context: .\WebApplication7
+      dockerfile: Dockerfile
+
+  reservations:
+    image: ${DOCKER_REGISTRY-}reservations
+    build:
+      context: .
+      dockerfile: Reservations\Dockerfile
+

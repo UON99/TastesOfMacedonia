@@ -129,7 +129,7 @@ namespace WebApplication7.Controllers
             using (var client = ResApi.Initial())
             {
                 //HTTP POST
-                var postTask = client.PostAsJsonAsync<reservation>("api/reservations", new reservation()
+                var postTask = client.PostAsJsonAsync<reservation>("Reservations/api/reservations", new reservation()
                 {
                     Id = reservation.Id,
                     restaurant_name = reservation.restaurant_name,
@@ -156,7 +156,7 @@ namespace WebApplication7.Controllers
         {
             List<reservation> reservations = new List<reservation>();
             HttpClient client = ResApi.Initial();
-            HttpResponseMessage reservationMessage = await client.GetAsync("api/reservations");
+            HttpResponseMessage reservationMessage = await client.GetAsync("Reservations/api/reservations");
             if (reservationMessage.IsSuccessStatusCode)
             {
                 var results = reservationMessage.Content.ReadAsStringAsync().Result;

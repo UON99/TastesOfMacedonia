@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tastes of Macedonia", "WebApplication7\Tastes of Macedonia.csproj", "{75197229-307E-473B-AFC5-96F731D48BBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reservations", "Reservations\Reservations.csproj", "{88A7BE89-2745-4F54-8E29-5FC2D18E8A51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reservations", "Reservations\Reservations.csproj", "{88A7BE89-2745-4F54-8E29-5FC2D18E8A51}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C03B7F12-BFF1-40F4-A321-AE54374CDDBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{88A7BE89-2745-4F54-8E29-5FC2D18E8A51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88A7BE89-2745-4F54-8E29-5FC2D18E8A51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88A7BE89-2745-4F54-8E29-5FC2D18E8A51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C03B7F12-BFF1-40F4-A321-AE54374CDDBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C03B7F12-BFF1-40F4-A321-AE54374CDDBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C03B7F12-BFF1-40F4-A321-AE54374CDDBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C03B7F12-BFF1-40F4-A321-AE54374CDDBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

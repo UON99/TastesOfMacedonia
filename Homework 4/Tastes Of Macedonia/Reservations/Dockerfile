@@ -11,7 +11,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-nanoserver-1903 AS build
 WORKDIR /src
 COPY ["Reservations/Reservations.csproj", "Reservations/"]
-RUN dotnet restore "Reservations/Reservations.csproj"
+RUN dotnet restore
 COPY . .
 WORKDIR "/src/Reservations"
 RUN dotnet build "Reservations.csproj" -c Release -o /app/build

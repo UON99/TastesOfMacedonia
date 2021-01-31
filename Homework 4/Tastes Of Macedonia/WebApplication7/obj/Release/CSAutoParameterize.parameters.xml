@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Data Source=tcp:msssqllocaldb.database.windows.net,1433;Initial Catalog=Users;User ID=adminroot;Password=Admin99@;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Sava-PC\\Desktop\\SDA\\Homework\ 4\\Tastes\ Of\ Macedonia\\WebApplication7\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="masterEntities-Web.config Connection String" description="masterEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/Models.Restaurants.csdl|res://*/Models.Restaurants.ssdl|res://*/Models.Restaurants.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=tcp:msssqllocaldb.database.windows.net,1433;Initial Catalog=Restaurants;Integrated Security=False;User ID=adminroot;Password=Admin99@;TrustServerCertificate=False&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Sava-PC\\Desktop\\SDA\\Homework\ 4\\Tastes\ Of\ Macedonia\\WebApplication7\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='masterEntities']/@connectionString" />
+  </parameter>
+</parameters>

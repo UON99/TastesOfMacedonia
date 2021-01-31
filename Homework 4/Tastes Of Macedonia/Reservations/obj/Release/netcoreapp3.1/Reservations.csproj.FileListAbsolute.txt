@@ -138,7 +138,6 @@ C:\Users\Sava-PC\Desktop\SDA\Homework 4\Tastes Of Macedonia\Reservations\bin\Rel
 C:\Users\Sava-PC\Desktop\SDA\Homework 4\Tastes Of Macedonia\Reservations\bin\Release\netcoreapp3.1\System.Web.Http.dll
 C:\Users\Sava-PC\Desktop\SDA\Homework 4\Tastes Of Macedonia\Reservations\bin\Release\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 C:\Users\Sava-PC\Desktop\SDA\Homework 4\Tastes Of Macedonia\Reservations\obj\Release\netcoreapp3.1\Reservations.csproj.CoreCompileInputs.cache
-C:\Users\Sava-PC\Desktop\SDA\Homework 4\Tastes Of Macedonia\Reservations\obj\Release\netcoreapp3.1\Reservations.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Viktor\Documents\GitHub\Team-Allo-Allo-SDA\Homework 4\Tastes Of Macedonia\Reservations\bin\Release\netcoreapp3.1\appsettings.Development.json
 C:\Users\Viktor\Documents\GitHub\Team-Allo-Allo-SDA\Homework 4\Tastes Of Macedonia\Reservations\bin\Release\netcoreapp3.1\appsettings.json
 C:\Users\Viktor\Documents\GitHub\Team-Allo-Allo-SDA\Homework 4\Tastes Of Macedonia\Reservations\bin\Release\netcoreapp3.1\Properties\launchSettings.json

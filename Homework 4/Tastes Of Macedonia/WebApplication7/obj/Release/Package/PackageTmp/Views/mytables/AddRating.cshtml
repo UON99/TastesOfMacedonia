@@ -1,0 +1,97 @@
+﻿@model WebApplication7.Models.Rating
+
+@{
+    ViewBag.Title = "AddRating";
+}
+    <style>
+        .glyphicon {
+            font-size: 25px;
+            text-shadow: 0 0 1px black,0 0 1px black,0 0 1px black,0 0 1px black;
+            color: gold;
+        }
+    </style>
+<script>
+
+    //function for adding stars to rating, works on click.
+    function AddStars(item) {
+
+        var parent = item.parentNode;
+        var children = parent.children;
+        for (var i = 0; i < item.getAttribute('value'); i++) {
+            $(children[i]).attr("class", "glyphicon glyphicon-star");
+        }
+        for (var i = item.getAttribute('value'); i <= 5; i++) {
+            $(children[i]).attr("class", "glyphicon glyphicon-star-empty");
+        }
+
+        $("#label").val(item.getAttribute('value'));
+
+    }
+    //when mouse hovers, stars till the value of item fill up
+    function HoverStars(item) {
+        var parent = item.parentNode;
+        var children = parent.children;
+        for (var i = 0; i < item.getAttribute('value'); i++) {
+            $(children[i]).attr("class", "glyphicon glyphicon-star");
+        }
+
+    }
+    //shows selected item stars
+    function Selected(item) {
+        var children = item.children;
+
+        var rating = $("#label").val();
+        for (var i = 0; i < rating; i++) {
+            $(children[i]).attr("class", "glyphicon glyphicon-star");
+        }
+    }
+    //removes star filling on mouse out
+    function MouseOut(item) {
+        var parent = item.parentNode;
+        var children = parent.children;
+        for (var i = 0; i < item.getAttribute('value'); i++) {
+            $(children[i]).attr("class", "glyphicon glyphicon-star-empty");
+        }
+    }
+</script>
+<h2>AddRating</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Rating</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+       
+        <!--Creating 5 star spans and adding functionality-->
+        <div class="form-group">
+            <label><b>Rate @ViewBag.restaurant_name: </b></label>
+            <div id="parent" onmouseout="Selected(this)">
+                <span class="glyphicon glyphicon-star-empty" value="1" onclick="AddStars(this)" onmouseover="HoverStars(this)" onmouseout="MouseOut(this)"></span>
+                <span class="glyphicon glyphicon-star-empty" value="2" onclick="AddStars(this)" onmouseover="HoverStars(this)" onmouseout="MouseOut(this)"></span>
+                <span class="glyphicon glyphicon-star-empty" value="3" onclick="AddStars(this)" onmouseover="HoverStars(this)" onmouseout="MouseOut(this)"></span>
+                <span class="glyphicon glyphicon-star-empty" value="4" onclick="AddStars(this)" onmouseover="HoverStars(this)" onmouseout="MouseOut(this)"></span>
+                <span class="glyphicon glyphicon-star-empty" value="5" onclick="AddStars(this)" onmouseover="HoverStars(this)" onmouseout="MouseOut(this)"></span>
+            </div>
+            <div>
+                <input type="hidden" id="label" name="rating1" />
+                <input type="hidden" id="label" name="RestaurantId" value="@Model.RestaurantId"/>
+                <input type="hidden" name="user" value="@ViewBag.UserID" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" style="width:100px"/>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
