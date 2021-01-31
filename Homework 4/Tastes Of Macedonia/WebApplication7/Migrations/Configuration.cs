@@ -1,9 +1,6 @@
 namespace WebApplication7.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<WebApplication7.Models.ApplicationDbContext>
     {
@@ -15,7 +12,7 @@ namespace WebApplication7.Migrations
 
         protected override void Seed(WebApplication7.Models.ApplicationDbContext context)
         {
-       
+
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 

@@ -1,8 +1,7 @@
-﻿using System.Data.Entity;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace WebApplication7.Models
 {
@@ -18,10 +17,10 @@ namespace WebApplication7.Models
         }
     }
 
-    
+
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
+        private ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }

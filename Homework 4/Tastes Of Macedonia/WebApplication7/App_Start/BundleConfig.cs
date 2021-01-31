@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace WebApplication7
 {
@@ -28,7 +27,7 @@ namespace WebApplication7
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/DataTables/jquery.datatables.js",
                       "~/Scripts/DataTables/dataTables.bootstrap.js"
-                      
+
                       ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

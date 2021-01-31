@@ -1,17 +1,16 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Reservations.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
-using ServiceStack.Text;
 
 namespace Reservations
 {
     public class Startup
     {
+        [System.Obsolete]
         public Startup(Microsoft.Extensions.Hosting.IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -23,7 +22,7 @@ namespace Reservations
             Configuration = builder.Build();
         }
 
-        public IConfiguration Configuration { get; set; }
+        private IConfiguration Configuration { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {

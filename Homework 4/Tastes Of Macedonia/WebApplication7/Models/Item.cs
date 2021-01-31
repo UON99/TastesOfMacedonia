@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace WebApplication7.Models
 {
@@ -15,6 +12,6 @@ namespace WebApplication7.Models
         public String restaurant_name { get; set; }
         public string user { get; set; }
         public DateTime datetime { get; set; }
-        
+
     }
 }

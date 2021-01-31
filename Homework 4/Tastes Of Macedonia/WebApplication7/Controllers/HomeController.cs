@@ -12,35 +12,9 @@ namespace WebApplication7.Controllers
     public class HomeController : Controller
     {
 
-        ResApi api = new ResApi();
 
-        public void GetReservations(List<reservation> reservations, HttpResponseMessage res)
+        public ActionResult Index()
         {
-
-            var results = res.Content.ReadAsStringAsync().Result;
-            reservations = JsonConvert.DeserializeObject<List<reservation>>(results);
-            reservations = reservations.ToList();
-
-        }
-
-
-        public async Task<ActionResult> Index()
-        {
-            List<reservation> reservations = new List<reservation>();
-            HttpClient client = api.Initial();
-            HttpResponseMessage res = await client.GetAsync("api/reservations");
-            if (res.IsSuccessStatusCode)
-            {
-                GetReservations(reservations, res);
-            }
-
-            return View(reservations);
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
@@ -48,10 +22,6 @@ namespace WebApplication7.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
-        public ActionResult Reservations()
-        {
             return View();
         }
     }
